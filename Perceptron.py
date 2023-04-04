@@ -5,6 +5,7 @@ class Perceptron:
         self.a = a
         self.threshold = threshold
         self.name = name
+        self.printInfo()
 
     def isActivated(self, vector):
         if len(vector) != len(self.weights):
@@ -33,3 +34,7 @@ class Perceptron:
         return sum
 
 
+    def printInfo(self):
+        print("current values")
+        print("weights:\t" + self.weights.__str__())
+        print(f"threshold:\t{self.threshold}")

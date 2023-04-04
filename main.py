@@ -4,7 +4,7 @@ from Iris import Iris
 from Perceptron import Perceptron
 
 
-def initLists(trainSet, testSet, checkSet):
+def getLists(trainSet, testSet, checkSet):
     trainList = list()
     for i in trainSet:
         trainList.append(Iris(i))
@@ -17,19 +17,18 @@ def initLists(trainSet, testSet, checkSet):
 
     return trainList, testList, checkList
 
-
-def init():
+def getInitialData():
     if len(sys.argv) >= 4:
         a = float(sys.argv[1])
         trainSet = open(sys.argv[2], "r")
         testSet = open(sys.argv[3], "r")
     else:
         a = 0.5
-        trainSet = open("venv/Data/trainSet.txt", "r")
-        testSet = open("venv/Data/testSet.txt", "r")
+        trainSet = open("Data/trainSet.txt", "r")
+        testSet = open("Data/testSet.txt", "r")
 
-    checkSet = open("venv/Data/checkSet.txt", "r")
-    trainList, testList, checkList = initLists(trainSet, testSet, checkSet)
+    checkSet = open("Data/checkSet.txt", "r")
+    trainList, testList, checkList = getLists(trainSet, testSet, checkSet)
     return a, trainList, testList, checkList
 
 
@@ -77,6 +76,7 @@ def TrainAgainPrompt(perceptron, trainList):
     while True:
         t = trainPerceptronAndReturnAccuracy(perceptron, trainList)
         printAccuracies(t[0], t[1], t[2])
+        perceptron.printInfo()
         if t[0] > 99:
             input("")
             break
@@ -123,35 +123,12 @@ def userInputLoop(perceptron):
 
 
 # Main code here!!!!!
-a, trainList, testList, checkList = init()
+a, trainList, testList, checkList = getInitialData()
 
-perceptron = Perceptron(trainList[0].getVectorLength(), a, 4, "Iris", 4)
+perceptron = Perceptron(trainList[0].getVectorLength(), a, 1, "Iris", 1)
 
 TrainAgainPrompt(perceptron, trainList)
 
 testPerceptronAndPrintAccuracy(perceptron, testList, checkList)
 
 userInputLoop(perceptron)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
