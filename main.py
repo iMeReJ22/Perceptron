@@ -17,15 +17,15 @@ def getLists(trainSet, testSet, checkSet):
 
     return trainList, testList, checkList
 
-def getInitialData():
+def getInitialData(trainSet, testSet):
     if len(sys.argv) >= 4:
         a = float(sys.argv[1])
         trainSet = open(sys.argv[2], "r")
         testSet = open(sys.argv[3], "r")
     else:
         a = 0.5
-        trainSet = open("Data/trainSet.txt", "r")
-        testSet = open("Data/testSet.txt", "r")
+        trainSet = open(f"Data/{trainSet}", "r")
+        testSet = open(f"Data/{testSet}", "r")
 
     checkSet = open("Data/checkSet.txt", "r")
     trainList, testList, checkList = getLists(trainSet, testSet, checkSet)
@@ -123,9 +123,18 @@ def userInputLoop(perceptron):
 
 
 # Main code here!!!!!
-a, trainList, testList, checkList = getInitialData()
+if len(sys.argv) != 4:
+    train = "trainSet.txt"
+    test = "testSet.txt"
+    alfa = float("0.5")
+else:
+    train = sys.argv[1]
+    test = sys.argv[2]
+    alfa = float(sys.argv[3])
 
-perceptron = Perceptron(trainList[0].getVectorLength(), a, 1, "Iris", 1)
+a, trainList, testList, checkList = getInitialData(train, test)
+
+perceptron = Perceptron(trainList[0].getVectorLength(), alfa, 1, "Iris", 1)
 
 TrainAgainPrompt(perceptron, trainList)
 
